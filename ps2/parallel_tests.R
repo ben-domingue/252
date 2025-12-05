@@ -37,10 +37,8 @@ par_test<-function(resp) {
 
 
 #####################################################################
-set.seed(512373)
-dataset <- redivis::user("datapages")$dataset("item_response_warehouse",version='v5.0')
-df <- dataset$table("chess_lnirt")$to_data_frame() ##https://redivis.com/datasets/as2e-cv7jb41fd/tables/35se-d5dmd2xn9
-resp<-irw::long2resp(df)
+df <- irw::irw_fetch("chess_lnirt")
+resp<-irw::irw_long2resp(df)
 resp$id<-NULL
 
 rel<-list()
