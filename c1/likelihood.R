@@ -11,7 +11,7 @@ ll<-function(b,x,y) {
     -1*sum(y*log(pr)+(1-y)*log(1-pr)) ##note the -1
 }
 ##
-b0.est<-0
+b0.est<-0 ##note this. we wouldn't normally assume this but i want to have a likelihood surface that i can plot in 2d
 b1.est<-seq(-2,2,length.out=100)
 loglik<-numeric()
 for (i in 1:length(b1.est)) loglik[i]<-ll(c(b0.est,b1.est[i]),x=x,y=y)
