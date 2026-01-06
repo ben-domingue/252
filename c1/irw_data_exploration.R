@@ -14,7 +14,7 @@ f<-function(x) {
 }
 apply(resp[,-1],2,f)
 
-## Correlation of item responses
+## Mean of item responses
 mm<-apply(resp[,-1],2,mean,na.rm=TRUE)
 hist(mm,xlim=c(0,1))
 
