@@ -37,7 +37,6 @@ resp[,order(cs,decreasing=FALSE)]->resp
 par(mfrow=c(2,1))
 plot(colMeans(resp,na.rm=TRUE),type="l")
 plot(rowMeans(resp,na.rm=TRUE),type="l")
-##pause at this point to check in with ben
 
 #############################################################
 ##now we have most able examinees on the bottom and the hardest items on the left in 'resp'.
@@ -58,6 +57,8 @@ rs.sorted->rownames(prop)
 
 
 #################################################################
+##a.
+
 ##let's now look at the proportion of correct responsees as a function of sum score (for every row) for each item
 ##again, before running, what do you expect to see?
 as.numeric(rownames(prop))->rs
@@ -87,4 +88,11 @@ for (i in 1:ncol(resp)) {
 ##2. we won't observe an individual's location on the x-axis. this is the hard part!
 
 ########################
+##b. example logistic regression for the first item
+sumsc<-rowSums(resp)
+glm(resp[,1]~sumsc,'binomial')
+
+
+########################
+##c.
 df<-irw::irw_fetch("andrich_mudfold")
