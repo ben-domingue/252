@@ -52,7 +52,7 @@ get_coef <- function(mod) {
   do.call("rbind", co)
 }
 coef<-get_coef(m1) #second column is difficulty, we'll talk about the other columns later today
-coef
+coef #does your easiest/hardest item guess from above map onto what you are seeing here?
 
 ## in particular, i would look over this closely vis-a-vis the relevant part of the mirt manual:
 ## Rasch Only one intercept estimated, and the latent variance of
