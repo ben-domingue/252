@@ -1,6 +1,7 @@
 ## Goals
-## the main goal is to get oriented with the key output 
-## that we get from applications of these models to item response data
+## Learn to use mirt() package to estimate Rasch model
+## Make sense of output
+## construct Wright map!
 
 df <- irw::irw_fetch("chess_lnirt")
 resp<-irw::irw_long2resp(df)
@@ -26,21 +27,23 @@ get_coef <- function(mod) {
 coef<-get_coef(m1) #first column is alpha (note that they don't vary), second column is 'difficulty', ignore third and fourth
 coef
 
-## in particular, i would look over this closely vis-a-vis the relevant part of the mirt manual:
+##note that there is something different when we compare "our" version of the Rasch model to the mirt version.
+##It's very important that you note this difference!
+##so, be able to make sure you can explain this! [see below hint]
+plot(colMeans(resp,na.rm=TRUE),coef[,2],xlab="p-values",ylab="raw mirt estimates")
+
+## hint: look over this relevant part of the mirt manual:
 ## Rasch Only one intercept estimated, and the latent variance of
 ##      theta is freely estimated. If the data have more than two
 ##      categories then a partial credit model is used instead (see
 ##      'gpcm' below).
 ##           P(x = 1|theta, d) = \frac{1}{1 + exp(-(theta + d))}      
 
-##note that there is something different when we compare "our" version of the Rasch model to the mirt version.
-##It's very important that you note this difference!
-##so, be able to make sure you can explain this!
-plot(colMeans(resp,na.rm=TRUE),coef[,2],xlab="p-values",ylab="raw mirt estimates")
 
-## abilities
+## abilities (note: the abilities get estimated in a second step that uses output of previous call to mirt(). we'll talk more about this)
 th<-fscores(m1)
 
 ## wright map
 library(WrightMap)
 wrightMap(th,coef[,2])
+##what does this tell us about the relative difficulty of this assessment for the sample who took it? 
