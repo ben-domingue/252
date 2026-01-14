@@ -38,15 +38,9 @@ coef
 ##so, be able to make sure you can explain this!
 plot(colMeans(resp,na.rm=TRUE),coef[,2],xlab="p-values",ylab="raw mirt estimates")
 
-## here is a fun way of looking at comparing the estimated icc to empirical data
-itemfit(m1, empirical.plot = 3)
-##explore the fit across more items. what do you think?
+## abilities
+th<-fscores(m1)
 
-##as a comparison
-resp2<-resp
-resp2$fake<-rbinom(nrow(resp2),1,.5)
-m2 <- mirt(resp2, 1, itemtype = "Rasch")
-itemfit(m2, empirical.plot =21)
-
-
-
+## wright map
+library(WrightMap)
+wrightMap(th,coef[,2])

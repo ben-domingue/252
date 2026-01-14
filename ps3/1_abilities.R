@@ -16,7 +16,7 @@ b.mat<-matrix(b,np,ni,byrow=TRUE) #these are the item difficulties
 ##we're going to use what you may know from logistic regression
 inv_logit<-function(x) exp(x)/(1+exp(x))
 ##now the probability of a correct response is:
-pr<-inv_logit(-1*(th.mat+b.mat)) #note this is pairwise multiplication not matrix multiplication.
+pr<-inv_logit(-1*(th.mat-b.mat)) #note this is pairwise multiplication not matrix multiplication.
 
 ##we can simulate data using those probabilities
 resp<-pr
@@ -30,7 +30,7 @@ for (i in 1:ncol(resp)) resp[,i]<-rbinom(nrow(resp),1,resp[,i])
 ##1. via mirt
 library(mirt)
 mod<-mirt(data.frame(resp),1,itemtype="Rasch")
-th1<-fscores(mod,'Ml')
+th1<-fscores(mod,'ML')
 
 ##note that we did ML estimation of the item parameters via the mirt::fscores() function. we'll talk more about alternatives downstream
 
