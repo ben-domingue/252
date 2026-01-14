@@ -50,7 +50,7 @@ plot(z)
 #################################################################################################
 #################################################################################################
 #################################################################################################
-##Let's now focus on a simple two item test and look at the likelihood surfaces for all possible response patterns
+##Bonus: Let's now focus on a simple two item test and look at the likelihood surfaces for all possible response patterns
 
 ## select two items
 b_pair <- b[1:2]
