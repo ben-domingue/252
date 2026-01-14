@@ -32,8 +32,6 @@ library(mirt)
 mod<-mirt(data.frame(resp),1,itemtype="Rasch")
 th1<-fscores(mod,'ML')
 
-##note that we did ML estimation of the item parameters via the mirt::fscores() function. we'll talk more about alternatives downstream
-
 ##via ML using KNOWN item parameters
 loglik.2pl<-function(th,x,b) {
     p<-1/(1+exp(-1*(th-b)))
@@ -47,3 +45,52 @@ z<-data.frame(true=th,th.mirt=th1,th.ml=th2)
 plot(z)
 
 
+
+#################################################################################################
+#################################################################################################
+#################################################################################################
+#################################################################################################
+##Let's now focus on a simple two item test and look at the likelihood surfaces for all possible response patterns
+
+## select two items
+b_pair <- b[1:2]
+
+## log-likelihood for a single person and two items
+loglik_pair <- function(th, x, b) {
+    p <- 1 / (1 + exp(-(th - b)))
+    sum(x * log(p) + (1 - x) * log(1 - p))
+}
+
+## theta grid
+th_grid <- seq(-5, 5, length.out = 400)
+###########################
+                                        # question: why we need to set it between -5 and 5 in optim(), when would happen if not (especially for patterns 00 and 11)
+###########################
+
+## response patterns
+patterns <- list(
+    "00" = c(0, 0),
+    "01" = c(0, 1),
+    "10" = c(1, 0),
+    "11" = c(1, 1)
+)
+
+par(mfrow = c(2, 2))
+
+for (nm in names(patterns)) {
+    x <- patterns[[nm]]
+    ll <- sapply(th_grid, loglik_pair, x = x, b = b_pair)
+    plot(
+        th_grid,
+        ll,
+        type = "l",
+        main = paste("Response pattern", nm),
+        xlab = "Latent variable theta",
+        ylab = "Person likelihood"
+    )
+    ## mark MLE if finite
+    th_hat <- th_grid[which.max(ll)]
+    abline(v = th_hat, lty = 2)
+}
+
+par(mfrow = c(1, 1))
