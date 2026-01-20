@@ -8,16 +8,21 @@ resp$id<-NULL
 
 library(mirt)
 mods<-list()
-mods$`1pl`<-mirt(resp,1,'Rasch')
+##mods$`1pl`<-mirt(resp,1,'1PL') ##note we are using '1pl' instead o 'Rasch'. subtle difference!
+n<-ncol(resp)
+model_syntax <- paste(paste('F1 = 1-',n,sep=''),
+                      paste('CONSTRAIN = (1-',n,', a1)',sep=''),
+                      sep="\n")
+mods$`1pl` <- mirt(resp, model_syntax)
 mods$`2pl`<-mirt(resp,1,'2PL')
 mods$`3pl`<-mirt(resp,1,'3PL')
 
-f<-function(m) coef(m,IRTpars=TRUE,simplify=TRUE)$items
+f<-function(m) coef(m,IRTpars=TRUE,simplify=TRUE)
 lapply(mods,f) ##the item parameters, note IRTpars=TRUE means we have difficulties rather than easiness parameters
 
 
 ##look at the item parameters for the three models
-##how different are the difficulty parameters for each?
+##how different are the difficulty parameters for each? how difficult is this assessment in general?
 ##what happens as you go from 2pl to 3pl with the discrimination parameters
 ##what do you think of the range of guessing params?
 
@@ -31,6 +36,7 @@ for (i in 1:ncol(resp)) {
         ei<-extract.item(mods[[j]],i)
         yv<-expected.item(ei,th)
         lines(th,yv,col=cols[j])
+        lines(th,2*dnorm(th),lwd=.5,col='gray',lty=2)
     }
 }
 ##What do you think?

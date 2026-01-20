@@ -8,7 +8,7 @@ resp$id<-NULL
 
 library(mirt)
 mods<-list()
-mods$`1pl`<-mirt(resp,1,'Rasch')
+mods$`1pl`<-mirt(resp,1,'1PL')
 mods$`2pl`<-mirt(resp,1,'2PL')
 mods$`3pl`<-mirt(resp,1,'3PL')
 
