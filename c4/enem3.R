@@ -1,5 +1,4 @@
-df<-irw::irw_fetch("enem_2013_1mil_lc")
-df<-df[df$booklet==175,]
+df<-enem[enem$booklet==175,]
 set.seed(8675309)
 ids<-sample(unique(df$id),5000)
 df<-df[df$id %in% ids,]

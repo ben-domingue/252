@@ -1,8 +1,6 @@
-df<-irw::irw_fetch("enem_2013_1mil_lc")
-
 ##some different groups
-g1<-df[df$booklet==175,]
-g2<-df[df$booklet==176,]
+g1<-enem[enem$booklet==175,]
+g2<-enem[enem$booklet==176,]
 ss<-by(g1$resp,g1$id,sum)
 m<-mean(ss)
 id.hi<-names(ss)[ss>m]
@@ -31,3 +29,18 @@ plot(z[[2]][,2],z[[4]][,2]); abline(0,1)
 plot(z[[1]][,1],z[[2]][,1]); abline(0,1)
 plot(z[[3]][,1],z[[4]][,1]); abline(0,1)
 plot(z[[2]][,1],z[[4]][,1]); abline(0,1)
+
+## ##Things to look at lot better if you run the Rasch model
+## f<-function(df) {
+##     set.seed(8675309)
+##     ids<-sample(unique(df$id),5000)
+##     df<-df[df$id %in% ids,]
+##     resp<-irw::irw_long2resp(df)
+##     resp$id<-NULL
+##     library(mirt)
+##     m<-mirt(resp,1,"Rasch")
+##     co<-coef(m,simplify=TRUE,IRTpars=TRUE)$items
+## }
+## z<-lapply(L,f)
+## plot(z[[3]][,2],z[[4]][,2],xlab='G3',ylab='G4'); abline(0,1)
+

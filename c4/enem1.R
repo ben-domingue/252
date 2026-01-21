@@ -1,5 +1,5 @@
-df<-irw::irw_fetch("enem_2013_1mil_lc")
-df<-df[df$booklet==175,]
+enem<-irw::irw_fetch("enem_2013_1mil_lc")
+df<-enem[enem$booklet==175,]
 set.seed(8675309)
 ids<-sample(unique(df$id),5000)
 df<-df[df$id %in% ids,]
@@ -8,7 +8,6 @@ resp$id<-NULL
 
 library(mirt)
 mods<-list()
-##mods$`1pl`<-mirt(resp,1,'1PL') ##note we are using '1pl' instead o 'Rasch'. subtle difference!
 n<-ncol(resp)
 model_syntax <- paste(paste('F1 = 1-',n,sep=''),
                       paste('CONSTRAIN = (1-',n,', a1)',sep=''),
@@ -36,7 +35,7 @@ for (i in 1:ncol(resp)) {
         ei<-extract.item(mods[[j]],i)
         yv<-expected.item(ei,th)
         lines(th,yv,col=cols[j])
-        lines(th,2*dnorm(th),lwd=.5,col='gray',lty=2)
+        lines(th,2*dnorm(th),lwd=.5,col='gray',lty=2) ##this is to emphasize that these are where the abilities are centered; differences at edges less meanginful
     }
 }
 ##What do you think?
