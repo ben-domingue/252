@@ -15,6 +15,21 @@ mods$`1pl` <- mirt(resp, model_syntax)
 mods$`2pl`<-mirt(resp,1,'2PL')
 mods$`3pl`<-mirt(resp,1,'3PL')
 
+th<-seq(-4,4,length.out=1000)
+ii<-list()
+for (i in 1:ncol(resp)) {
+    ei<-extract.item(mods$`2pl`,i)
+    ii[[i]]<-iteminfo(ei,th)
+}
+par(mfrow=c(1,2),mgp=c(2,1,0),mar=c(3,3,1,1))
+plot(NULL,xlim=range(th),ylim=c(0,1))
+for (i in 1:length(ii)) lines(th,ii[[i]])
+ti<-do.call("cbind",ii)
+ti<-rowSums(ti)
+plot(th,ti,col='red',type='l',ylim=c(0,6))
+lines(th,1/sqrt(ti),col='blue') ##do these numbers match up to SE values below?
+
+
 th<-list()
 for (i in 1:length(mods)) {
     th[[i]]<-fscores(mods[[i]],
@@ -30,4 +45,3 @@ plot(th[[1]],col=cols[1],ylim=c(0,1),pch=19,cex=.5)
 points(th[[2]],col=cols[2],pch=19,cex=.5)
 points(th[[3]],col=cols[3],pch=19,cex=.5)
 
-    ##let's look at how different things are if we assume missingness?
