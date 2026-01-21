@@ -87,3 +87,10 @@ resp$id<-NULL
 summary(colMeans(resp,na.rm=TRUE))
 tab$gilbert14<-f(df)
 
+
+
+
+m<-mirt(resp,1,'Rasch')
+coef(m,simplify=TRUE)[-1]
+m<-mirt(resp,1,'2PL')
+coef(m,simplify=TRUE)[-1]
