@@ -14,12 +14,20 @@ L<-list(g1=g1,g2=g2,g3=g3,g4=g4)
 
 f<-function(df) {
     set.seed(8675309)
-    ids<-sample(unique(df$id),1000)
+    ids<-sample(unique(df$id),5000)
     df<-df[df$id %in% ids,]
     resp<-irw::irw_long2resp(df)
     resp$id<-NULL
     library(mirt)
-    m<-mirt(resp,2,"2PL")
+    m<-mirt(resp,1,"2PL")
     co<-coef(m,simplify=TRUE,IRTpars=TRUE)$items
 }
 z<-lapply(L,f)
+
+par(mfcol=c(3,2),mgp=c(2,1,0),mar=c(3,3,1,1))
+plot(z[[1]][,2],z[[2]][,2]); abline(0,1)
+plot(z[[3]][,2],z[[4]][,2]); abline(0,1)
+plot(z[[2]][,2],z[[4]][,2]); abline(0,1)
+plot(z[[1]][,1],z[[2]][,1]); abline(0,1)
+plot(z[[3]][,1],z[[4]][,1]); abline(0,1)
+plot(z[[2]][,1],z[[4]][,1]); abline(0,1)

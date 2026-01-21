@@ -55,15 +55,22 @@ sim_rasch <- function(n.items, n.people, mean.item.diff = 0) {
   resp <- resp[rowSums(resp) != 0 & rowSums(resp) != n.items, ] # can you figure out why this might be necessary?
   resp
 }
-set.seed(1020)
+set.seed(55)
 resp<-sim_rasch(10,1000)
 id<-1:nrow(resp)
 L<-list()
 for (i in 1:ncol(resp)) L[[i]]<-data.frame(id=id,item=colnames(resp)[i],resp=resp[,i])
 df<-data.frame(do.call("rbind",L))
 
-tab$sim_3pl<-f(df,m2.name="3PL",holdout=TRUE)
-tab$sim_3pl_overfit<-f(df,m2.name="3PL",holdout=FALSE)
+oos<-f(df,m2.name="3PL",holdout=TRUE)
+oos*100000
+overf<-f(df,m2.name="3PL",holdout=FALSE)
+overf*100000
+
+## > oos*100000
+## [1] 45952 46022
+## > overf*100000
+## [1] 42793 42746
 
 ######################################################
 df<-irw::irw_fetch('gilbert_meta_2') 
@@ -71,18 +78,12 @@ resp<-irw::irw_long2resp(df)
 resp$id<-NULL
 summary(colMeans(resp,na.rm=TRUE))
 tab$gilbert2<-f(df)
+
+
+######################################################
 df<-irw::irw_fetch('gilbert_meta_14') 
 resp<-irw::irw_long2resp(df)
 resp$id<-NULL
 summary(colMeans(resp,na.rm=TRUE))
 tab$gilbert14<-f(df)
 
-tab$gilbert2_3pl<-f(irw::irw_fetch('gilbert_meta_2'),m2.name="3PL",holdout=TRUE)
-tab$gilbert2_3pl_overfit<-f(irw::irw_fetch('gilbert_meta_2'),m2.name="3PL",holdout=FALSE)
-
-##if we look at the rmses for the rasch model, which data is better described by the rasch?
-##if we look at the change from 1pl to 2pl, which model change results in bigger improvement? 
-
-
-z<-do.call("rbind",tab)
-z*10000
