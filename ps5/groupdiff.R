@@ -1,6 +1,14 @@
+## - Take data from group 1 and estimate item parameters. 
+## - Sample some responses from group 2 that will serve as test data. 
+## - Fit model in the remaining training data from group 2. 
+## - Make predictions in the group 2 test data using item parameters derived from both groups (where abilities are generated using the group 2 training data). 
+## - Compute the RMSE between predictions and responses. 
+
+
 groupdiff<-function(df,group,
-                    g0=0,
-                    group.key=1) {
+                    g0=0, #guessing parameter
+                    group.key=1 #group=group.key will be group 1
+                    ) {
     library(imv)
     library(mirt)
     library(irw)
