@@ -9,8 +9,8 @@
 df<-irw::irw_fetch("gilbert_meta_11")
 items<-irw::irw_itemtext("gilbert_meta_11")
 df<-merge(items,df)
-unique(df$item_text)
 resp<-irw::irw_long2resp(df)
+unique(df$item_text)
 
 ##assessing gender-related dif
 f<-function(varname='cov_male') {
