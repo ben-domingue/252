@@ -16,7 +16,7 @@ b.mat<-matrix(b,np,ni,byrow=TRUE) #these are the item difficulties
 ##we're going to use what you may know from logistic regression
 inv_logit<-function(x) exp(x)/(1+exp(x))
 ##now the probability of a correct response is:
-pr<-inv_logit(-1*(th.mat-b.mat)) #note this is pairwise multiplication not matrix multiplication.
+pr<-inv_logit((th.mat-b.mat)) #note this is pairwise multiplication not matrix multiplication.
 
 ##we can simulate data using those probabilities
 resp<-pr
