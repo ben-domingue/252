@@ -4,6 +4,7 @@
 ## tabs<-intersect(t1,t2)
 ## for (nm in tabs) print(irw::irw_info(nm))
 
+library(difR)## will require difR package, use install.packages("difR") if not available
 
 ##getting the data ready
 df<-irw::irw_fetch("gilbert_meta_11")
