@@ -22,6 +22,9 @@ f<-function(df) {
 }
 z<-lapply(L,f)
 
+##fix me!!
+##need to label axes
+
 par(mfcol=c(3,2),mgp=c(2,1,0),mar=c(3,3,1,1))
 plot(z[[1]][,2],z[[2]][,2]); abline(0,1)
 plot(z[[3]][,2],z[[4]][,2]); abline(0,1)

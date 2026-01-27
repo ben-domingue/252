@@ -15,7 +15,7 @@ cm<-colMeans(resp,na.rm=TRUE)
 resp<-resp[,cm>.05 & cm<.95]
 
 m1<-mirt::mirt(resp,1,'Rasch')
-m2<-mirt::mirt(resp,1,'Rasch',guess=0.5)
+m2<-mirt::mirt(resp,1,'Rasch',guess=0.25)
 
 
 ##LDT data
