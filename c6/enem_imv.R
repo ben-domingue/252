@@ -1,3 +1,6 @@
+##install. devtools::install_github("ben-domingue/imv", ref="main")
+
+
 getpred<-function(m,resp,tmp) {
     ##get predictions from m2
     th<-fscores(m)
