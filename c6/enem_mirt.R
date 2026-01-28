@@ -33,3 +33,16 @@ plot(mod1d)
 
 mod2d@Fit$AIC
 mod1d@Fit$AIC
+
+
+##imv::imv.mirt(mod1d,mod2d) ##We will come back to this.
+##install. devtools::install_github("ben-domingue/imv", ref="main")
+m1<-mirt(resp,1,'Rasch')
+
+df<-irw::irw_fetch("gilbert_meta_1")
+resp<-irw::irw_long2resp(df)
+resp$id<-NULL
+mod1<-mirt(resp,1,'Rasch',verbose=FALSE)
+mod2<-mirt(resp,1,'2PL',verbose=FALSE)
+imv::imv.mirt(mod1)
+imv::imv.mirt(mod1,mod2)
