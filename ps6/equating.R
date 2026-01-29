@@ -1,6 +1,4 @@
-nm <- c("enem_2013_1mil_ch")
-dataset <- redivis::user("datapages")$dataset("item_response_warehouse")
-df <- dataset$table(nm)$to_data_frame()
+df <- irw::irw_fetch("enem_2013_1mil_ch")
 
 ids<-sample(unique(df$id),50000)
 df<-df[df$id %in% ids,]
@@ -10,11 +8,12 @@ table(df$item,df$booklet) #just confirming items are repeated across booklet
 L<-split(df,df$booklet)
 f<-function(x) {
     library(mirt)
-    x<-irw::long2resp(x)
+    x<-irw::irw_long2resp(x)
     x$id<-NULL
-    m<-mirt(x,1,'Rasch')
-    z<-coef(m,simplify=TRUE)$items
-    data.frame(item=rownames(z),b=z[,2])
+    mean(rowSums(x,na.rm=TRUE))
+                                        #m<-mirt(x,1,'Rasch')
+    #z<-coef(m,simplify=TRUE)$items
+                                        #data.frame(item=rownames(z),b=z[,2])
 }
 est<-lapply(L,f)
 
