@@ -69,3 +69,16 @@ model<-mirt.model(s)
 m2 <- mirt(resp, model)
 
 coef(m2,simplify=TRUE,IRTpars=TRUE)
+
+
+s<-paste("F1=1-8,
+     F2=9-20,
+     PRIOR = (1-8, a1, lnorm, 0.0, 1.0),
+     PRIOR = (9-20, a2, lnorm, 0.0, 1.0)",
+     sep="")
+model<-mirt.model(s)
+m3 <- mirt(resp, model)
+
+m1<-mirt(resp,1,'2PL')
+
+anova(m1,m2,m3)

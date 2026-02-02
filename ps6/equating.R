@@ -1,16 +1,21 @@
-df <- irw::irw_fetch("enem_2014_1mil_mt")
+enem <- irw::irw_fetch("enem_2014_1mil_mt")
+enem<-enem[enem$booklet %in% c(207:209),]
 
+rs<-by(enem$resp,enem$id,sum)
+ids<-names(rs)[rs>0] ##these seem to be people that are missing or got no correct responses. either way not informative.
+enem<-enem[enem$id %in% ids,]
 
-
-df<-df[df$booklet %in% c(207:209),]
 library(mirt)
+
+##concurrent caliration in a sample
+ids<-sample(unique(enem$id),10000,replace=TRUE)
+df<-enem[enem$id %in% ids,]
 x<-irw::irw_long2resp(df)
 x$id<-NULL
-rs<-rowSums(x)
-x<-x[rs>0,]
 m<-mirt(x,1,'Rasch') ##concurrent calibration. easy!
 
-L<-split(df,df$booklet)
+##now calibration by booklet
+L<-split(enem,enem$booklet)
 f<-function(df) {
     ids<-sample(unique(df$id),5000)
     df<-df[df$id %in% ids,]
@@ -41,7 +46,7 @@ for (i in 2:length(est)) {
     x0<-merge(x0,x)
 }
 plot(density(x0[,2]-x0[,3]),col='blue',type='l')
-lines(density(x0[,2]-x0[,4]),col='red')
+lines(density(x0[,2]-x0[,4]),col='red') ##what do you see? 
 
 #######################################################################
 
@@ -60,8 +65,5 @@ plot(th[[1]],th[[2]],col='gray',pch=19,xlab='207-yellow',ylab='second form'); ab
 points(th[[1]],th[[3]],col='red',pch=19)
 legend("topleft",bty='n',fill=c("gray","red"),c("208-grey","209-blue"))
 
-
-## the variable that holds the form is id_prova_mt and it takes values 207-210. 207 is yellow, 208 is grey, 209 is blue, and 210 is pink
-##blue=bad
 
 
