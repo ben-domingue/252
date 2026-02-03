@@ -11,7 +11,7 @@ simfun<-function(N=150,b=NULL) {
     gr1<-sample(1:length(forms1),length(th),replace=TRUE)
     
     ##design 2
-    forms2<-list(1:15,11:25,21:35,31:45,c(1:5,41:60))
+    forms2<-list(1:15,11:25,21:35,31:45,c(1:5,41:50))
     gr2<-sample(1:length(forms2),length(th),replace=TRUE)
     
     ##design 3
