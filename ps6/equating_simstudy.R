@@ -1,6 +1,6 @@
 simfun<-function(N=150,b=NULL) {
     if (is.null(b)) b<-rnorm(50,sd=.7)
-    h<-rnorm(N)
+    th<-rnorm(N)
     k<-outer(th,b,'-')
     p<-1/(1+exp(-k))
     resp<-p
