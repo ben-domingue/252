@@ -1,11 +1,3 @@
-#df<-irw::irw_fetch("gilbert_meta_4")
-
-library(lme4)
-m<-lmer(resp~0+(1|id)+item+item:treat,df)
-fe<-fixef(m)
-tx<-grepl(":",names(fe))
-plot(fe[!tx],fe[tx],xlab='main item effects',ylab='treatment specific item effects',pch=19,cex=2)
-abline(h=mean(fe[tx]))
 
 df<-irw::irw_fetch("gilbert_meta_2")
 ##getting post-test theta
@@ -24,6 +16,7 @@ m0<-lm(th~treat,z)
 m1<-lm(th~treat+std_baseline,z)
 m2<-lm(th~treat*std_baseline,z)
 ##response level
+m1a<-lme4::glmer(resp~1+treat+(1|item)+(1|id),df,family='binomial')
 m2a<-lme4::glmer(resp~1+treat+std_baseline+(1|item)+(1|id),df,family='binomial')
 m3a<-lme4::glmer(resp~1+treat*std_baseline+(1|item)+(1|id),df,family='binomial')
 m4a<-lme4::glmer(resp~1+treat*std_baseline+(1+treat|item)+(1|id),df,family='binomial')
