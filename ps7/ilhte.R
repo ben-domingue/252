@@ -1,4 +1,3 @@
-
 df<-irw::irw_fetch("gilbert_meta_2")
 ##getting post-test theta
 resp<-irw::irw_long2resp(df)
