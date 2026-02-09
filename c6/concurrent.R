@@ -32,3 +32,5 @@ m<-mirt(resp,1,'Rasch')
 
 plot(coef(m,IRTpars=TRUE,simplify=TRUE)$items,
      coef(m.all,IRTpars=TRUE,simplify=TRUE)$items)
+abline(0,1)
+
