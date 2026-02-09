@@ -1,4 +1,3 @@
-##install. devtools::install_github("ben-domingue/imv", ref="main")
 
 
 getpred<-function(m,resp,tmp) {
@@ -62,3 +61,16 @@ df<-as.data.frame(df)
 om<-numeric()
 for (iii in 1:5) om[iii]<-f(df,gr=iii)
 mean(om)
+
+
+
+##This is much easier without priors (i need to implement that...)
+devtools::install_github("ben-domingue/imv", ref="main")
+
+df<-irw::irw_fetch("gilbert_meta_1")
+resp<-irw::irw_long2resp(df)
+resp$id<-NULL
+mod1<-mirt(resp,1,'Rasch',verbose=FALSE)
+mod2<-mirt(resp,1,'2PL',verbose=FALSE)
+imv::imv.mirt(mod1)
+imv::imv.mirt(mod1,mod2)
