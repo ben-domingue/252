@@ -11,11 +11,12 @@ mods<-list()
 n<-ncol(resp)
 s<-paste("F1=1-40,
      F2=1-40,
+     \nCOV=F1*F2,
      PRIOR = (1-40, a1, lnorm, 0.0, 1.0),
      PRIOR = (1-40, a2, lnorm, 0.0, 1.0)",
      sep="")
 model<-mirt.model(s)
-mod2d <- mirt(resp, model)
+mod2d <- mirt(resp, model) ##i don't think this works
 ##
 s<-paste("F1=1-40,
      PRIOR = (1-40, a1, lnorm, 0.0, 1.0)",
