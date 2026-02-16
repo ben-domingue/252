@@ -10,6 +10,7 @@ df$rt<-as.numeric(df$rt)
 df$slow<-ifelse(df$rt>2,1,0)
 z<-df[,c("id","item","slow")]
 names(z)[3]<-'resp'
+z$node<-0
 ##
 df<-df[df$slow==1,]
 df<-df[,c("id","item","resp")]
@@ -21,7 +22,6 @@ flippers<-rownames(co)[co[,1]<0]
 df$resp<-ifelse(df$item %in% flippers,6-df$resp,df$resp)
 df$resp<-ifelse(df$resp>2,1,0)
 ##
-z$node<-0
 df$node<-1
 df<-data.frame(rbind(df,z))
 
