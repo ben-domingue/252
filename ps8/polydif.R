@@ -28,9 +28,15 @@ simdata<-function(b,th) {
     names(x)<-paste("item",1:ncol(x))
     x
 }
-resp<-simdata(b,th)
+resp<-simdata(b,th)-1 ##subtracting 1 to get things 0/1/2
 m<-mirt::mirt(resp,1,'Rasch')
 co<-mirt::coef(m,IRTpars=TRUE,simplify=TRUE)$item
 par(mfrow=c(1,2))
 plot(b[,1],co[,2])
 plot(b[,2],co[,3])
+
+##expected resopnse functxion
+i1<-mirt::extract.item(m,1)
+th<-seq(-4,4,length.out=1000)
+ei<-mirt::expected.item(i1,th)
+plot(th,ei)
