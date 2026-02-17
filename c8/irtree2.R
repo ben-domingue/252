@@ -2,8 +2,7 @@ out<-list()
 ##
 for (fn in c("AGR","CSN","EST","EXT","OPN")) {
     print(fn)
-    load(paste("ffm_",fn,".Rdata",sep=""))
-    ##df<-irw::irw_fetch(""offlinefriend_bigfive.Rdata"")
+    df<-irw::irw_fetch(""offlinefriend_bigfive.Rdata"")
     
     df<-df[!is.na(df$resp),]
     ids<-sample(unique(df$id),10000)
