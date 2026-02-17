@@ -1,6 +1,6 @@
 library(GDINA)
 ##https://doi.org/10.18637/jss.v093.i14
-readRDS(frac20.rds)
+frac20 <- readRDS("frac20.rds")
 frac20$dat
 frac20$Q
 m <- GDINA(frac20$dat,frac20$Q,model="DINA")
