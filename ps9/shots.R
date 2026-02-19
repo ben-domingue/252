@@ -55,21 +55,23 @@ points(m$x,fitted(m))
 h<-head(th$id,100)
 t<-tail(th$id,100)
 
+par(mfrow=c(1,2),mgp=c(2,1,0),mar=c(3,3,1,1))
 ##distance
 f<-function(g,...) {
     y<-x[x$id %in% g,]
     lines(density(y$dist),...)
     }
-plot(NULL,xlim=c(20,40),ylim=c(0,.2))
+plot(NULL,xlim=c(20,40),ylim=c(0,.25),xlab="Distance from hoop",ylab="")
 f(h,col='red')
 f(t,col='blue')
+legend("topright",bty='n',fill=c("red","blue"),c("Best 100","Worst 100"))
 
 ##time
 f<-function(g,...) {
     y<-x[x$id %in% g,]
     lines(density(y$gameclock),...)
     }
-plot(NULL,xlim=c(0,48),ylim=c(0,.04))
+plot(NULL,xlim=c(0,48),ylim=c(0,.027),xlab="Time left in game",ylab='')
 f(h,col='red')
 f(t,col='blue')
 
@@ -83,6 +85,6 @@ f<-function(g,...) {
     }
     lines(do.call("rbind",L),...)
 }
-plot(NULL,xlim=c(0,2),ylim=c(0,1))
+plot(NULL,xlim=c(0,2),ylim=c(0,1),ylab='accuracy',xlab='minutes left in game')
 f(h,col='red')
 f(t,col='blue')
