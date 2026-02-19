@@ -20,7 +20,7 @@ abline(0,1) #but they depend on different identification assumptions
 nms<-paste("Qmatrix__",1:8,sep='')
 fm<-paste("resp~0+(1|id)+",paste(nms,collapse="+"))
 m2<-lmer(as.formula(fm),df)
-loadings<-t(apply(df[df$id==170,nms],1,paste,collapse='')) ##170 is arbitrary
+loadings<-t(apply(df[df$id=="id170",nms],1,paste,collapse='')) ##170 is arbitrary
 table(loadings)
 
 ##C
