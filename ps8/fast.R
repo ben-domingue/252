@@ -1,5 +1,11 @@
 xx<-irw::irw_fetch("ffm_CSN")
 
+## #if you have timeout problems, try:
+## table_obj <- irw:::.fetch_redivis_table("ffm_CSN")
+## table_obj$download("ffm_CSN.csv")
+## library(data.table)
+## df <- fread("ffm_CSN.csv")
+
 df<-xx
 ##cutting it down
 ids<-sample(unique(df$id),10000)

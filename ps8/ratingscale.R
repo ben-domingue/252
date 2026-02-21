@@ -1,5 +1,12 @@
 df<-irw::irw_fetch("ffm_CSN")
 
+##lijin notes that she has problems with the above. if you have the same try:
+## table_obj <- irw:::.fetch_redivis_table("ffm_CSN")
+## table_obj$download("ffm_CSN.csv")
+## library(data.table)
+## df <- fread("ffm_CSN.csv")
+
+
 ##cutting it down
 ids<-sample(unique(df$id),10000)
 df<-df[df$id %in% ids,]
