@@ -20,3 +20,9 @@ df<-df[is.finite(df$lrt),]
 pisa<-df
 m.pisa<-glmer(resp~(1|item)+(1|id)+lrt,pisa,family='binomial')
 
+
+##alt code if you have problems with pisa:
+table_obj <- irw:::.fetch_redivis_table("pisa2018_read")
+table_obj$download("pisa2018_read.csv")
+library(data.table)
+df <- fread("pisa2018_read.csv")
