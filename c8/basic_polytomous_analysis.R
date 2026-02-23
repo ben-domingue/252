@@ -82,3 +82,19 @@ for (i in 1:4) {
         lines(z[[1]],z[[2]][,i])
     }
 }
+
+##Let's now look at the expected response function (this will be between 0 and K-1 not 0 and 1) for all of the items
+f<-function(mod,n) { #see line 41
+    extr <- extract.item(mod,n)
+    Theta <- matrix(seq(-6,6, length.out=2000))
+    pr <- expected.item(extr, Theta) #min() of first item
+    cbind(Theta,pr)
+}
+cols<-c("black","red","blue")
+n<-1
+plot(NULL,xlim=c(-5,5),ylim=c(0,4),xlab='theta',ylab='Pr')
+for (j in 1:length(mods)) {
+    z<-f(mods[[j]],n)
+    lines(z,col=cols[j])
+}
+legend("bottomright",bty='n',fill=cols,names(mods))
