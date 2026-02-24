@@ -1,22 +1,3 @@
-mrot_rt_trial_no_retest<-readRDS("mrot_rt_trial_no_retest.rds")
-
-
-# 1. Prep the data: Extract angle and filter for correct trials
-df <- mrot_rt_trial_no_retest %>%
-    mutate(
-                                        # Extract the angle from the item name (e.g., "shape_120" -> 120)
-        angle = as.numeric(str_extract(item, "\\d+")),
-                                        # Optional: extract stimulus type to see 2D vs 3D differences
-        stimulus = str_extract(item, "^[a-z]+") 
-  ) %>%
-                                        # Keep only correct responses with valid reaction times
-    filter( is.finite(log_rt), !is.na(angle))
-
-
-library(lme4)
-m1<-glmer(correct~angle+(1|user_id),df,family='binomial')
-df$item2<-paste('angle',df$angle,sep='')
-m2<-glmer(correct~item2+(1|user_id),df,family='binomial')
 
 #' Perform k-fold cross-validation to get out-of-sample predictions (Robust Version)
 #'
@@ -156,12 +137,51 @@ cross_validate_predictions_robust <- function(m1, m2, k = 10, seed = 123, re.for
   # - The out-of-sample predictions for each model
   return(model_data)
 }
+rms<-function(x,y) sqrt(mean((x-y)^2))
+library(lme4)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+########################################################################
+##First let's ensure this function is not doing something too wacky
+mu<-rnorm(100)
+x<-rnorm(5000)
+gr<-sample(1:length(mu),5000,replace=TRUE)
+k<-x+mu[gr]
+p<-1/(1+exp(-k))
+y<-rbinom(length(x),1,p)
+df<-data.frame(x=x,y=y,gr=gr,x2=x^2)
+m1<-glmer(y~x+(1|gr),df,family='binomial')
+m2<-glmer(y~x+x2+(1|gr),df,family='binomial')
+cv<-cross_validate_predictions_robust(m1,m2)
+rms(cv$y,cv$pred_m1)
+rms(cv$y,cv$pred_m2)
+library(imv)
+imv.binary(cv$y,cv$pred_m1,cv$pred_m2) ##nice...
+
+########################################################################
+mrot_rt_trial_no_retest<-readRDS("mrot_rt_trial_no_retest.rds") ##see 252/c9 slides
+# 1. Prep the data: Extract angle and filter for correct trials
+df <- mrot_rt_trial_no_retest %>%
+    mutate(
+                                        # Extract the angle from the item name (e.g., "shape_120" -> 120)
+        angle = as.numeric(str_extract(item, "\\d+")),
+                                        # Optional: extract stimulus type to see 2D vs 3D differences
+        stimulus = str_extract(item, "^[a-z]+") 
+  ) %>%
+                                        # Keep only correct responses with valid reaction times
+    filter( is.finite(log_rt), !is.na(angle))
+
+##models
+m1<-glmer(correct~angle+(1|user_id),df,family='binomial')
+df$item2<-paste('angle',df$angle,sep='')
+m2<-glmer(correct~item2+(1|user_id),df,family='binomial')
 
 cv<-cross_validate_predictions_robust(m1,m2)
-
-rms<-function(x,y) sqrt(mean((x-y)^2))
 rms(cv$correct,cv$pred_m1)
 rms(cv$correct,cv$pred_m2)
 
 library(imv)
 imv.binary(cv$correct,cv$pred_m1,cv$pred_m2)
+
