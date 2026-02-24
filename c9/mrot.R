@@ -185,3 +185,10 @@ rms(cv$correct,cv$pred_m2)
 library(imv)
 imv.binary(cv$correct,cv$pred_m1,cv$pred_m2)
 
+df$rad<-df$angle*pi/180
+df$rad2<-df$rad^2
+m1a<-glmer(correct~rad+(1|user_id),df,family='binomial')
+m2a<-glmer(correct~rad+rad2+(1|user_id),df,family='binomial')
+cva<-cross_validate_predictions_robust(m1a,m2a,k=5)
+library(imv)
+imv.binary(cva$correct,cva$pred_m1,cva$pred_m2)
