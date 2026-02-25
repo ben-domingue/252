@@ -1,4 +1,4 @@
-##https://www.dropbox.com/scl/fi/i9pyd8ntape2cwi9gssrg/preference_inventory.Rdata?rlkey=wrjkgai37wskqxzov2lnmyvqd&st=6ct1zpts&dl=0
+##get data: https://www.dropbox.com/scl/fi/i9pyd8ntape2cwi9gssrg/preference_inventory.Rdata?rlkey=wrjkgai37wskqxzov2lnmyvqd&st=6ct1zpts&dl=0
 load("preference_inventory.Rdata")
 library(mirt)
 
