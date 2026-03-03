@@ -1,3 +1,4 @@
+set.seed(1034101)
 df<-irw::irw_fetch("promis1wave1_pain") #load("promis1wave1_pain.Rdata")
 
 ids<-sample(unique(df$id),5000)
@@ -22,7 +23,7 @@ f<-function(mod,n) {
     list(Theta,pr)
 }
 mods<-list(grm=mod.grm,pcm=mod.pcm,srm=mod.srm)
-n<-1
+n<-8 ##the item you will focus on, feel free to mix this up!
 out<-list()
 for (i in 1:length(mods)) out[[i]]<-f(mods[[i]],n)
 
@@ -47,7 +48,7 @@ f<-function(mod,n) { #see line 41
 cols<-c("black","red","blue")
 par(mfrow=c(5,5),mgp=c(2,1,0),mar=c(3,3,1,1))
 for (i in 1:25) {
-    plot(NULL,xlim=c(-5,5),ylim=c(0,4),xlab='theta',ylab='Pr')
+    plot(NULL,xlim=c(-5,5),ylim=c(0,4),xlab='theta',ylab='E(x)')
     for (j in 1:length(mods)) {
         z<-f(mods[[j]],i)
         lines(z,col=cols[j])
