@@ -38,6 +38,7 @@ for (i in 1:ncol(resp)) {
         lines(th,2*dnorm(th),lwd=.5,col='gray',lty=2) ##this is to emphasize that these are where the abilities are centered; differences at edges less meanginful
     }
 }
+legend("topleft",bty='n',fill=cols,legend=1:3)
 ##What do you think?
 
 ##extensions if you like: consider the 4pl and 5pl?
