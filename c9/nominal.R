@@ -1,16 +1,11 @@
-##get data: https://www.dropbox.com/scl/fi/i9pyd8ntape2cwi9gssrg/preference_inventory.Rdata?rlkey=wrjkgai37wskqxzov2lnmyvqd&st=3wuaqoln&dl=0
+df<-irw::irw_fetch("preference_inventory",source='nom')
 
-
-
-load("preference_inventory.Rdata")
-library(mirt)
-
-resp<-irw::irw_long2resp(df)
+resp<-irw::irw_long2resp(df,resp_col='text')
 resp$id<-NULL
+library(mirt)
 m<-mirt(resp,1,'nominal')
 
 
-##Let's now compare the CRFs for the three models for item n
 f<-function(mod,n) { 
     extr <- extract.item(mod,n)
     Theta <- matrix(seq(-6,6, length.out=2000))
